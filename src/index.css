@@ -1,0 +1,216 @@
+/* Global styles */
+button {
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+  direction: rtl;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Striped table rows */
+.data-table tbody tr:nth-child(even) {
+  background: #f0f0f0;
+}
+.data-table tbody tr:hover {
+  background: #e8e8e8;
+}
+
+/* Sticky table header */
+.table-wrap {
+  overflow: auto;
+  max-height: 65vh;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  background: #2b2b2b;
+  color: #ECA72C;
+  z-index: 10;
+  white-space: nowrap;
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: right;
+  cursor: pointer;
+  user-select: none;
+}
+
+.data-table thead th:hover {
+  background: #3a3a3a;
+}
+
+.data-table tbody td {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #e8e8e8;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Upload zone */
+.upload-zone {
+  border: 2.5px dashed #ccc;
+  border-radius: 16px;
+  padding: 56px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #fff;
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: #ECA72C;
+  background: #fff9f0;
+}
+
+/* KPI card */
+.kpi-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Btn */
+.btn {
+  background: #ECA72C;
+  color: #2b2b2b;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.88; }
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+.btn-dark {
+  background: #2b2b2b;
+  color: #ECA72C;
+}
+
+/* Scrollable page */
+.page-scroll {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 0 0 48px;
+}
+
+/* Settings panel */
+.settings-panel {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.settings-panel textarea {
+  width: 100%;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  resize: vertical;
+  background: #fafafa;
+  color: #2b2b2b;
+  line-height: 1.8;
+  transition: border-color 0.15s;
+}
+.settings-panel textarea:focus {
+  outline: none;
+  border-color: #ECA72C;
+}
+
+/* Line chart */
+.chart-wrap {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-red { background: #ffe5e5; color: #c0392b; }
+.badge-green { background: #e5f5e0; color: #27ae60; }
+.badge-gray { background: #f0f0f0; color: #666; }
+.badge-orange { background: #fff3e0; color: #e67e22; }
+
+/* Toggle switch style */
+.toggle-group {
+  display: inline-flex;
+  background: #e8e8e8;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+.toggle-btn {
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: #666;
+  transition: all 0.15s;
+}
+.toggle-btn.active {
+  background: #2b2b2b;
+  color: #ECA72C;
+}
+
+/* Header bar */
+.header-bar {
+  background: #2b2b2b;
+  color: #ECA72C;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .kpi-grid { flex-direction: column !important; }
+  .chart-grid { flex-direction: column !important; }
+  .header-bar { flex-wrap: wrap; gap: 10px; }
+  .table-wrap { max-height: 55vh; }
+}
