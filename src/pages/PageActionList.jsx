@@ -19,7 +19,7 @@ function fmtOpp(row) {
 function downloadCSV(rows) {
   const BOM = '﻿';
   const headers = [
-    'نوع', 'کوئری / صفحه', 'کلیک', 'Impression', 'CTR', 'رتبه',
+    'نوع', 'کوئری / صفحه', 'Click', 'Impression', 'CTR', 'رتبه',
     'شکاف CTR', 'امتیاز فرصت', 'نیت', 'برند', 'فلگ',
   ];
 
@@ -109,7 +109,7 @@ export default function PageActionList({ setPage, actionList, toggleActionList }
                 <tr>
                   <th>نوع</th>
                   <th>کوئری / صفحه</th>
-                  <th>کلیک</th>
+                  <th>Click</th>
                   <th>Impression</th>
                   <th>CTR</th>
                   <th>رتبه</th>
@@ -213,5 +213,5 @@ function GapBadge({ row }) {
 function OppBadge({ row }) {
   if (!row.hasData || row.opportunityScore === null) return <span className="badge badge-gray">داده ناکافی</span>;
   if (row.opportunityScore === 0) return <span className="badge badge-gray">۰</span>;
-  return <span className="badge badge-orange">+{row.opportunityScore.toLocaleString('fa-IR')}</span>;
+  return <span className="badge badge-orange">+{row.opportunityScore.toLocaleString()} Click</span>;
 }

@@ -3,7 +3,12 @@ import { useState } from 'react';
 export function Tooltip({ text, children }) {
   const [pos, setPos] = useState(null);
 
-  const handleMove = (e) => setPos({ x: e.clientX, y: e.clientY });
+  const handleMove = (e) => {
+    const TW = 260; // tooltip width
+    const x = Math.min(Math.max(e.clientX - TW / 2, 8), window.innerWidth - TW - 8);
+    const y = e.clientY;
+    setPos({ x, y });
+  };
 
   return (
     <>
@@ -19,21 +24,23 @@ export function Tooltip({ text, children }) {
         <div
           style={{
             position: 'fixed',
-            left: Math.min(pos.x + 12, window.innerWidth - 300),
-            top: pos.y - 8,
+            left: pos.x,
+            top: pos.y - 12,
             transform: 'translateY(-100%)',
             background: '#2b2b2b',
             color: '#f5f5f5',
-            padding: '10px 14px',
-            borderRadius: 10,
+            padding: '9px 13px',
+            borderRadius: 9,
             fontSize: 12,
-            maxWidth: 280,
+            width: 260,
             zIndex: 99999,
             lineHeight: 1.75,
             pointerEvents: 'none',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.28)',
             direction: 'rtl',
             textAlign: 'right',
+            wordBreak: 'break-word',
+            whiteSpace: 'normal',
           }}
         >
           {text}
@@ -51,14 +58,14 @@ export function InfoIcon({ text }) {
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: 16,
-          height: 16,
+          width: 15,
+          height: 15,
           borderRadius: '50%',
           background: '#e0e0e0',
           color: '#666',
-          fontSize: 10,
+          fontSize: 9,
           fontWeight: 700,
-          marginRight: 5,
+          marginRight: 4,
           marginLeft: 2,
           flexShrink: 0,
           lineHeight: 1,
