@@ -10,6 +10,7 @@ import { LoginModal } from './components/LoginModal.jsx';
 import { NameAnalysisModal } from './components/NameAnalysisModal.jsx';
 import { GSCModal } from './components/GSCModal.jsx';
 import { LimitModal } from './components/LimitModal.jsx';
+import PageAdmin from './pages/PageAdmin.jsx';
 
 const DEFAULT_SETTINGS = {
   brandTerms: [],
@@ -287,6 +288,7 @@ export default function App() {
       {page === 2 && <PageSummary {...commonProps} navigateTo3={navigateTo3} />}
       {page === 3 && <PageDetail {...commonProps} initialSort={initialSort} setInitialSort={setInitialSort} />}
       {page === 4 && <PageActionList {...commonProps} />}
+      {page === 6 && <PageAdmin user={user} setPage={setPage} />}
       {page === 5 && (
         <PageAccount
           key={analysesVersion}

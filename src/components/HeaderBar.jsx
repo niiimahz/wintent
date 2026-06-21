@@ -74,6 +74,16 @@ export function HeaderBar({ setPage, actionListCount, user }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           {user ? (
             <>
+              {/* Admin link — only for admin */}
+              {user?.email === 'niiimahz76@gmail.com' && (
+                <button
+                  onClick={() => setPage(6)}
+                  style={{ background: 'none', border: 'none', color: '#ECA72C', fontSize: 12, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif', opacity: 0.7 }}
+                >
+                  ادمین
+                </button>
+              )}
+
               {/* Avatar + حساب کاربری → account page */}
               <button
                 onClick={() => setPage(5)}
