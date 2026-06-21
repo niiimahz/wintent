@@ -30,8 +30,9 @@ export function GSCModal({ providerToken, onData, onClose, onReconnect }) {
       setSites(list);
       if (list.length > 0) setSelectedSite(list[0].siteUrl);
     } catch (e) {
-      if (e.message === 'auth_expired') setAuthError(true);
-      else setFetchError('خطا در دریافت سایت‌ها');
+      console.log('loadSites error:', e.message);
+      if (e.message === 'auth_expired' || e.message === 'no_scope' || e.message === 'no_token') setAuthError(true);
+      else setFetchError('خطا: ' + e.message);
     } finally {
       setLoadingSites(false);
     }

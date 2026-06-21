@@ -1,12 +1,15 @@
 const BASE = 'https://www.googleapis.com/webmasters/v3';
 
 export async function listSites(token) {
+  if (!token) throw new Error('no_token');
   const res = await fetch(`${BASE}/sites`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (res.status === 401) throw new Error('auth_expired');
-  if (!res.ok) throw new Error('fetch_failed');
   const data = await res.json();
+  console.log('GSC listSites status:', res.status, data);
+  if (res.status === 401) throw new Error('auth_expired');
+  if (res.status === 403) throw new Error('no_scope');
+  if (!res.ok) throw new Error('fetch_failed: ' + res.status);
   return data.siteEntry || [];
 }
 
