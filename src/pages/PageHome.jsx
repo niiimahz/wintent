@@ -1,38 +1,7 @@
-import { useState, useRef } from 'react';
-import { parseZip } from '../utils/parseZip.js';
 import { CreatorCTA } from '../components/CreatorCTA.jsx';
 import { HeaderBar } from '../components/HeaderBar.jsx';
 
-export default function PageHome({ onUpload, user, setPage }) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef();
-
-  const handleFile = async (file) => {
-    if (!file) return;
-    if (!file.name.endsWith('.zip')) {
-      setError('لطفاً یک فایل ZIP از Google Search Console آپلود کنید.');
-      return;
-    }
-    setError('');
-    setLoading(true);
-    try {
-      const result = await parseZip(file);
-      onUpload(result);
-    } catch (e) {
-      setError('خطا در پردازش فایل: ' + (e.message || 'فایل معتبر نیست'));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const onDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    handleFile(e.dataTransfer.files[0]);
-  };
-
+export default function PageHome({ user, setPage, providerToken, onConnectGSC, onOpenGSC }) {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f5f5f5' }}>
       <HeaderBar setPage={setPage} actionListCount={0} user={user} />
@@ -53,74 +22,85 @@ export default function PageHome({ onUpload, user, setPage }) {
           </p>
         </div>
 
-        {/* Upload box */}
-        <div style={{ width: '100%', maxWidth: 560 }}>
-          <div
-            className={`upload-zone${dragOver ? ' drag-over' : ''}`}
-            onClick={() => !loading && inputRef.current.click()}
-            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-            onDragLeave={() => setDragOver(false)}
-            onDrop={onDrop}
-          >
-            {loading ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-                <Spinner />
-                <span style={{ color: '#888', fontSize: 14 }}>در حال پردازش فایل…</span>
+        {/* CTA box */}
+        <div style={{
+          background: '#fff',
+          borderRadius: 16,
+          padding: '40px 36px',
+          maxWidth: 480,
+          width: '100%',
+          textAlign: 'center',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+          direction: 'rtl',
+        }}>
+          {!user ? (
+            <>
+              <div style={{ fontSize: 44, marginBottom: 16 }}>🔍</div>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10 }}>
+                برای شروع، با Gmail وارد شو
               </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-                <div style={{ fontSize: 44 }}>📂</div>
-                <div style={{ fontWeight: 700, fontSize: 15, color: '#2b2b2b', textAlign: 'center', lineHeight: 1.6 }}>
-                  فایل zip گزارشات سرچ کنسول را اینجا بنداز یا برای انتخاب فایل کلیک کن
-                </div>
-                <div style={{ fontSize: 12, color: '#999', textAlign: 'center', lineHeight: 1.8, maxWidth: 400 }}>
-                  وارد بخش Performance سرچ کنسول خود شوید. از بالا سمت راست روی گزینه Export کلیک کرده و دیتا را در قالب .csv خروجی بگیرید. فایل zip را اینجا آپلود کنید.
-                </div>
-                <button
-                  className="btn"
-                  style={{ marginTop: 6, background: '#ECA72C', color: '#2b2b2b', borderRadius: 8, padding: '10px 24px', fontWeight: 600, fontSize: 14 }}
-                  onClick={(e) => { e.stopPropagation(); inputRef.current.click(); }}
-                >
-                  انتخاب فایل
-                </button>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24 }}>
+                وینتنت مستقیم به سرچ کنسولت وصل میشه و گزارش می‌سازه — بدون نیاز به اکسپورت فایل.
+              </p>
+              <button
+                onClick={() => setPage(5)}
+                style={{
+                  width: '100%', padding: '14px', borderRadius: 10,
+                  background: '#ECA72C', color: '#2b2b2b', fontWeight: 700, fontSize: 15,
+                  border: 'none', cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif',
+                }}
+              >
+                ورود با Gmail
+              </button>
+            </>
+          ) : providerToken ? (
+            <>
+              <div style={{ fontSize: 44, marginBottom: 16 }}>📊</div>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10 }}>
+                آماده‌ای؟
               </div>
-            )}
-          </div>
-          <input
-            ref={inputRef}
-            type="file"
-            accept=".zip"
-            style={{ display: 'none' }}
-            onChange={(e) => handleFile(e.target.files[0])}
-          />
-          {error && (
-            <div style={{ marginTop: 12, background: '#ffe5e5', color: '#c0392b', borderRadius: 8, padding: '10px 14px', fontSize: 13 }}>
-              {error}
-            </div>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24 }}>
+                سایتت رو انتخاب کن و بازه زمانی بده تا گزارش کامل بسازیم.
+              </p>
+              <button
+                onClick={onOpenGSC}
+                style={{
+                  width: '100%', padding: '14px', borderRadius: 10,
+                  background: '#ECA72C', color: '#2b2b2b', fontWeight: 700, fontSize: 15,
+                  border: 'none', cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif',
+                }}
+              >
+                انتخاب سایت و دریافت گزارش
+              </button>
+            </>
+          ) : (
+            <>
+              <div style={{ fontSize: 44, marginBottom: 16 }}>🔌</div>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10 }}>
+                اتصال به سرچ کنسول
+              </div>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24 }}>
+                یک بار به وینتنت اجازه بده به سرچ کنسولت دسترسی داشته باشه. بعدش کافیه سایت و بازه زمانی انتخاب کنی.
+              </p>
+              <button
+                onClick={onConnectGSC}
+                style={{
+                  width: '100%', padding: '14px', borderRadius: 10,
+                  background: '#2b2b2b', color: '#ECA72C', fontWeight: 700, fontSize: 15,
+                  border: 'none', cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif',
+                }}
+              >
+                اتصال به سرچ کنسول گوگل
+              </button>
+            </>
           )}
         </div>
 
         {/* Creator CTA */}
-        <div style={{ width: '100%', maxWidth: 640, borderRadius: 14, overflow: 'hidden' }}>
+        <div style={{ width: '100%', maxWidth: 480, borderRadius: 14, overflow: 'hidden' }}>
           <CreatorCTA />
         </div>
       </div>
     </div>
   );
 }
-
-function Spinner() {
-  return (
-    <div style={{
-      width: 36, height: 36,
-      border: '3px solid #e0e0e0',
-      borderTop: '3px solid #ECA72C',
-      borderRadius: '50%',
-      animation: 'spin 0.8s linear infinite',
-    }} />
-  );
-}
-
-const styleTag = document.createElement('style');
-styleTag.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
-document.head.appendChild(styleTag);

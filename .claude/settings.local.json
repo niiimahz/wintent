@@ -16,7 +16,10 @@
       "Skill(run)",
       "Skill(run:*)",
       "Bash(curl -s http://localhost:5174)",
-      "Bash(kill 12223)"
+      "Bash(kill 12223)",
+      "Bash(git commit -m ' *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
