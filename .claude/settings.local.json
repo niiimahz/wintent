@@ -12,7 +12,11 @@
       "Read(//Users/hz/**)",
       "Bash(git config *)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(curl -s http://localhost:5174)",
+      "Bash(kill 12223)"
     ]
   }
 }
