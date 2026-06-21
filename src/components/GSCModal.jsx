@@ -163,7 +163,7 @@ export function GSCModal({ providerToken, onData, onClose, onReconnect }) {
 
         <button
           onClick={onClose}
-          style={{ display: 'block', width: '100%', marginTop: 12, background: 'none', border: 'none', color: '#bbb', fontSize: 12, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}
+          style={{ display: 'block', width: '100%', marginTop: 12, background: 'none', border: 'none', color: '#e05555', fontSize: 13, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}
         >
           انصراف
         </button>

@@ -173,7 +173,7 @@ export function SettingsModal({ settings, onSave, onClose }) {
           ) : (
             <button
               onClick={onClose}
-              style={{ background: 'none', color: '#aaa', fontSize: 14, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}
+              style={{ background: 'none', border: 'none', color: '#e05555', fontSize: 13, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}
             >
               انصراف
             </button>
