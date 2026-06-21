@@ -39,9 +39,10 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
               <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
                 گزارشی هدفمند برای سئو هدفمندتر!
               </div>
-              <p style={{ fontSize: 13, color: '#888', lineHeight: 2, marginBottom: 24, textAlign: 'center' }}>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.9, marginBottom: 6, textAlign: 'center' }}>
                 برای شروع، با جیمیل لاگین کنید و سرچ کنسول خود را متصل کنید.
-                <br />
+              </p>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.9, marginBottom: 24, textAlign: 'center' }}>
                 وینتنت گزارشات را برای شما آماده می‌کند...
               </p>
               <button
