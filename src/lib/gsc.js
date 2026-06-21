@@ -7,9 +7,7 @@ export async function listSites(token) {
   if (res.status === 401) throw new Error('auth_expired');
   if (!res.ok) throw new Error('fetch_failed');
   const data = await res.json();
-  return (data.siteEntry || []).filter(
-    s => s.permissionLevel !== 'siteUnverifiedUser'
-  );
+  return data.siteEntry || [];
 }
 
 export async function fetchGSCData(token, siteUrl, startDate, endDate) {
