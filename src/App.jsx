@@ -126,11 +126,7 @@ export default function App() {
     const totalCreated = profile?.total_analyses_created ?? 0;
 
     if (totalCreated >= maxAllowed) {
-      if (!isComplete) {
-        setLimitModal({ message: 'پروفایلت رو تو حساب کاربری تکمیل کن تا سقف آنالیز از ۱ به ۳ برسه.' });
-      } else {
-        setLimitModal({ message: `به سقف ${maxAllowed} آنالیز رسیدی. با اشتراک‌گذاری لینک رفرال می‌تونی سقف رو بالاتر ببری.` });
-      }
+      setLimitModal({ isProfileComplete: isComplete });
       return;
     }
 
@@ -259,7 +255,7 @@ export default function App() {
     <>
       {limitModal && (
         <LimitModal
-          message={limitModal.message}
+          isProfileComplete={limitModal.isProfileComplete}
           onClose={() => setLimitModal(null)}
           onGoAccount={() => { setLimitModal(null); setPage(5); }}
         />
