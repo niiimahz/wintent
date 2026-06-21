@@ -36,10 +36,10 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
           {!user ? (
             <>
               <div style={{ fontSize: 44, marginBottom: 16 }}>🔍</div>
-              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10 }}>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10, textAlign: 'center' }}>
                 برای شروع، با Gmail وارد شو
               </div>
-              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24 }}>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24, textAlign: 'center' }}>
                 وینتنت مستقیم به سرچ کنسولت وصل میشه و گزارش می‌سازه — بدون نیاز به اکسپورت فایل.
               </p>
               <button
@@ -55,7 +55,7 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
             </>
           ) : providerToken ? (
             <>
-              <p style={{ fontSize: 14, color: '#666', lineHeight: 1.8, marginBottom: 28 }}>
+              <p style={{ fontSize: 14, color: '#666', lineHeight: 1.8, marginBottom: 28, textAlign: 'center' }}>
                 سرچ کنسولت رو وصل کن، آنالیزش رو تحویل بگیر.
               </p>
               <button
@@ -75,10 +75,10 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
           ) : (
             <>
               <div style={{ fontSize: 44, marginBottom: 16 }}>🔌</div>
-              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10 }}>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10, textAlign: 'center' }}>
                 اتصال به سرچ کنسول
               </div>
-              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24 }}>
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24, textAlign: 'center' }}>
                 یک بار به وینتنت اجازه بده به سرچ کنسولت دسترسی داشته باشه. بعدش کافیه سایت و بازه زمانی انتخاب کنی.
               </p>
               <button
