@@ -96,6 +96,7 @@ const TableRow = memo(function TableRow({ row, isQuery, inList, onToggle }) {
 
 export default function PageDetail({
   setPage,
+  user,
   queriesWithMetrics,
   pagesWithMetrics,
   actionList,
@@ -171,7 +172,7 @@ export default function PageDetail({
       `}</style>
 
       <div className="page-scroll">
-        <HeaderBar setPage={setPage} actionListCount={actionList.size} />
+        <HeaderBar setPage={setPage} actionListCount={actionList.size} user={user} />
         <CreatorCTA />
 
         <div style={{ maxWidth: 1300, margin: '0 auto', padding: '24px 20px' }}>

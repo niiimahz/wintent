@@ -14,6 +14,7 @@ const TOOLTIPS = {
 
 export default function PageSummary({
   setPage,
+  user,
   data,
   settings,
   setSettings,
@@ -37,7 +38,7 @@ export default function PageSummary({
 
   return (
     <div className="page-scroll">
-      <HeaderBar setPage={setPage} actionListCount={actionList.size} />
+      <HeaderBar setPage={setPage} actionListCount={actionList.size} user={user} />
       <CreatorCTA />
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '28px 20px' }}>

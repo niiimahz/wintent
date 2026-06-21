@@ -51,12 +51,12 @@ function downloadCSV(rows) {
   URL.revokeObjectURL(url);
 }
 
-export default function PageActionList({ setPage, actionList, toggleActionList }) {
+export default function PageActionList({ setPage, user, actionList, toggleActionList }) {
   const rows = Array.from(actionList.values());
 
   return (
     <div className="page-scroll">
-      <HeaderBar setPage={setPage} actionListCount={actionList.size} />
+      <HeaderBar setPage={setPage} actionListCount={actionList.size} user={user} />
       <CreatorCTA />
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '28px 20px' }}>
