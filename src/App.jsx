@@ -9,6 +9,7 @@ import PageAccount from './pages/PageAccount.jsx';
 import { LoginModal } from './components/LoginModal.jsx';
 import { NameAnalysisModal } from './components/NameAnalysisModal.jsx';
 import { GSCModal } from './components/GSCModal.jsx';
+import { LimitModal } from './components/LimitModal.jsx';
 
 const DEFAULT_SETTINGS = {
   brandTerms: [],
@@ -48,6 +49,7 @@ export default function App() {
   // ── Modal state ───────────────────────────────────────
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showGSCModal, setShowGSCModal] = useState(false);
+  const [limitModal, setLimitModal] = useState(null); // { message }
   const [showNameModal, setShowNameModal] = useState(false);
   const [nameModalData, setNameModalData] = useState(null);
 
@@ -125,11 +127,10 @@ export default function App() {
 
     if (totalCreated >= maxAllowed) {
       if (!isComplete) {
-        alert('برای آنالیز بیشتر، ابتدا پروفایلت رو تو حساب کاربری تکمیل کن تا سقف به ۳ برسه.');
+        setLimitModal({ message: 'پروفایلت رو تو حساب کاربری تکمیل کن تا سقف آنالیز از ۱ به ۳ برسه.' });
       } else {
-        alert(`به سقف ${maxAllowed} آنالیز رسیدی. از طریق رفرال میتونی سقف رو بالاتر ببری.`);
+        setLimitModal({ message: `به سقف ${maxAllowed} آنالیز رسیدی. با اشتراک‌گذاری لینک رفرال می‌تونی سقف رو بالاتر ببری.` });
       }
-      setPage(5);
       return;
     }
 
@@ -256,6 +257,13 @@ export default function App() {
 
   return (
     <>
+      {limitModal && (
+        <LimitModal
+          message={limitModal.message}
+          onClose={() => setLimitModal(null)}
+          onGoAccount={() => { setLimitModal(null); setPage(5); }}
+        />
+      )}
       {showLoginModal && (
         <LoginModal onClose={() => setShowLoginModal(false)} />
       )}
