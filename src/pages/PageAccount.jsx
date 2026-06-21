@@ -29,6 +29,14 @@ function toEnDigits(str) {
     .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 }
 
+function normalizePhone(p) {
+  // Remove any non-digit characters
+  const digits = p.replace(/\D/g, '');
+  // If 10 digits starting with 9, prepend 0
+  if (digits.length === 10 && digits.startsWith('9')) return '0' + digits;
+  return digits;
+}
+
 export default function PageAccount({ setPage, user, actionList, onLoadAnalysis, onSignOut }) {
   const [profile, setProfile] = useState(null);
   const [analyses, setAnalyses] = useState([]);
@@ -81,7 +89,7 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
     const { error } = await supabase.from('profiles').update({
       first_name: firstName.trim(),
       last_name: lastName.trim(),
-      phone: toEnDigits(phone.trim()),
+      phone: normalizePhone(toEnDigits(phone.trim())),
       job_position: jobPosition,
       how_found: howFound,
       phone_verified: true,
@@ -183,10 +191,13 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
 
             <input
               value={phone} onChange={e => setPhone(e.target.value)}
-              placeholder="شماره موبایل (09xxxxxxxxx)"
-              style={{ ...inputStyle, direction: 'ltr', textAlign: 'left', marginBottom: 10, width: '100%' }}
+              placeholder="09123456789"
+              style={{ ...inputStyle, direction: 'ltr', textAlign: 'left', marginBottom: 4, width: '100%' }}
               onFocus={e => e.target.style.borderColor = '#ECA72C'} onBlur={e => e.target.style.borderColor = '#e0e0e0'}
             />
+            <div style={{ fontSize: 11, color: '#aaa', marginBottom: 10, paddingRight: 2 }}>
+              شماره موبایل با صفر وارد کنید — مثال: 09123456789
+            </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
               <select value={jobPosition} onChange={e => setJobPosition(e.target.value)} style={inputStyle}>
