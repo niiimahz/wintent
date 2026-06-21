@@ -101,6 +101,15 @@ export default function App() {
   }, []);
 
 
+  // ── Normalize data to ensure label field always exists ─
+  function normalizeData(d) {
+    return {
+      ...d,
+      queries: (d.queries || []).map(r => ({ ...r, label: r.label ?? r.query ?? '' })),
+      pages: (d.pages || []).map(r => ({ ...r, label: r.label ?? r.page ?? '' })),
+    };
+  }
+
   // ── Core upload/analysis flow ─────────────────────────
   const handleUploadData = useCallback(async (parsedData) => {
     if (!user) {
@@ -160,7 +169,7 @@ export default function App() {
     const currentUser = user;
     setShowNameModal(false);
     setNameModalData(null);
-    setRawData(data);
+    setRawData(normalizeData(data));
     setPage(2);
     const id = await saveAnalysis(name, data, currentUser);
     if (id) {
@@ -171,7 +180,7 @@ export default function App() {
 
   // ── Load existing analysis ────────────────────────────
   const handleLoadAnalysis = useCallback(({ rawData: d, settings: s, analysisId }) => {
-    setRawData(d);
+    setRawData(normalizeData(d));
     if (s) setSettings(s);
     setCurrentAnalysisId(analysisId);
     setPage(2);
