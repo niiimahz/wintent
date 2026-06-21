@@ -33,7 +33,6 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
   const [profile, setProfile] = useState(null);
   const [analyses, setAnalyses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deleteId, setDeleteId] = useState(null);
 
   // Profile form state
   const [firstName, setFirstName] = useState('');
@@ -110,7 +109,6 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
   async function deleteAnalysis(id) {
     await supabase.from('analyses').delete().eq('id', id);
     setAnalyses(prev => prev.filter(a => a.id !== id));
-    setDeleteId(null);
   }
 
   // Not logged in
@@ -251,14 +249,6 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
                   <button onClick={() => loadAnalysis(a.id)} style={{ background: '#ECA72C', color: '#2b2b2b', border: 'none', borderRadius: 7, padding: '7px 14px', fontWeight: 700, fontSize: 12, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif', whiteSpace: 'nowrap' }}>
                     بارگذاری
                   </button>
-                  {deleteId === a.id ? (
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      <button onClick={() => deleteAnalysis(a.id)} style={{ background: '#c0392b', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 10px', fontSize: 11, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}>حذف</button>
-                      <button onClick={() => setDeleteId(null)} style={{ background: '#f0f0f0', color: '#666', border: 'none', borderRadius: 6, padding: '6px 10px', fontSize: 11, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}>انصراف</button>
-                    </div>
-                  ) : (
-                    <button onClick={() => setDeleteId(a.id)} style={{ background: 'none', border: 'none', color: '#ccc', cursor: 'pointer', fontSize: 16, padding: '4px 6px' }} title="حذف">🗑</button>
-                  )}
                 </div>
               ))}
             </div>
