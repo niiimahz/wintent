@@ -100,11 +100,6 @@ export default function App() {
     signInWithGSC();
   }, []);
 
-  // ── GSC data received ─────────────────────────────────
-  const handleGSCData = useCallback(async (data) => {
-    setShowGSCModal(false);
-    await handleUploadData(data);
-  }, [user]); // eslint-disable-line
 
   // ── Core upload/analysis flow ─────────────────────────
   const handleUploadData = useCallback(async (parsedData) => {
@@ -261,7 +256,7 @@ export default function App() {
       {showGSCModal && providerToken && (
         <GSCModal
           providerToken={providerToken}
-          onData={handleGSCData}
+          onData={async (data) => { setShowGSCModal(false); await handleUploadData(data); }}
           onClose={() => setShowGSCModal(false)}
           onReconnect={handleConnectGSC}
         />

@@ -40,22 +40,22 @@ export async function fetchGSCData(token, siteUrl, startDate, endDate) {
   return {
     queries: queryRows.map(r => ({
       query: r.keys[0],
-      clicks: r.clicks,
-      impressions: r.impressions,
-      ctr: r.ctr,
-      position: r.position,
+      clicks: r.clicks ?? 0,
+      impressions: r.impressions ?? 0,
+      ctr: r.ctr ?? 0,
+      position: r.position ?? 0,
     })),
     pages: pageRows.map(r => ({
       page: r.keys[0],
-      clicks: r.clicks,
-      impressions: r.impressions,
-      ctr: r.ctr,
-      position: r.position,
+      clicks: r.clicks ?? 0,
+      impressions: r.impressions ?? 0,
+      ctr: r.ctr ?? 0,
+      position: r.position ?? 0,
     })),
     chart: chartRows.map(r => ({
       date: r.keys[0],
-      clicks: r.clicks,
-      impressions: r.impressions,
+      clicks: r.clicks ?? 0,
+      impressions: r.impressions ?? 0,
     })),
     warnings: [],
   };
