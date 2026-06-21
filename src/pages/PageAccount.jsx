@@ -53,12 +53,13 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
   }
 
   async function fetchAnalyses() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('analyses')
       .select('id, name, file_name, created_at')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false });
-    if (data) setAnalyses(data);
+    if (error) { alert('خطا در دریافت آنالیزها: ' + error.message + ' | ' + error.code); return; }
+    setAnalyses(data || []);
   }
 
   async function savePhone() {
