@@ -14,8 +14,9 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
       }}>
         {/* Brand */}
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: 58, fontWeight: 700, color: '#2b2b2b', letterSpacing: '-2px', lineHeight: 1 }}>
+          <h1 style={{ fontSize: 58, fontWeight: 700, color: '#2b2b2b', letterSpacing: '-2px', lineHeight: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: 6 }}>
             wintent
+            <span style={{ fontSize: 13, fontWeight: 500, color: '#aaa', letterSpacing: 0, marginTop: 10 }}>Beta</span>
           </h1>
           <p style={{ marginTop: 14, color: '#666', fontSize: 15, fontWeight: 400 }}>
             دیتای سرچ کنسول بده، گزارشی بگیر که تا حالا ندیدی!
