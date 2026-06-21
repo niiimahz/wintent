@@ -283,11 +283,11 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
                 >
                   📋 کپی لینک رفرال
                 </button>
-                {extraAnalyses > 0 && (
-                  <div style={{ marginTop: 12, fontSize: 13, color: '#27ae60', fontWeight: 600 }}>
-                    🎉 تا الان {extraAnalyses} نفر از لینک تو ثبت‌نام کردن!
-                  </div>
-                )}
+                <div style={{ marginTop: 12, fontSize: 13, color: extraAnalyses > 0 ? '#27ae60' : '#aaa', fontWeight: extraAnalyses > 0 ? 600 : 400 }}>
+                  {extraAnalyses > 0
+                    ? `🎉 ${extraAnalyses} نفر از لینکت ثبت‌نام کردن — ${extraAnalyses} آنالیز اضافه گرفتی`
+                    : 'هنوز کسی از لینکت ثبت‌نام نکرده'}
+                </div>
               </>
             ) : (
               <div style={{ fontSize: 13, color: '#aaa' }}>در حال ساخت لینک…</div>
