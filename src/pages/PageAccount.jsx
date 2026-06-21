@@ -258,25 +258,17 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
         {/* Referral */}
         {isProfileComplete && (
           <div style={{ background: '#fff', borderRadius: 14, padding: '24px 28px', marginBottom: 20, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-            <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>🎁 رفع محدودیت آنالیز</div>
+            <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>🎁 دعوت دوستان، رفع محدودیت آنالیز</div>
             <p style={{ fontSize: 13, color: '#666', lineHeight: 1.8, marginBottom: 16 }}>
               به ازای هر نفری که از لینک اختصاصی تو ثبت‌نام کنه، یه آنالیز اضافه بهت تعلق میگیره.
             </p>
             {referralLink ? (
               <>
-                <div style={{ background: '#f8f8f8', border: '1.5px solid #e0e0e0', borderRadius: 8, padding: '10px 14px', fontSize: 12, direction: 'ltr', textAlign: 'left', wordBreak: 'break-all', marginBottom: 10 }}>
-                  {referralLink}
-                </div>
-                <button
-                  onClick={() => { navigator.clipboard.writeText(referralLink); alert('لینک کپی شد!'); }}
-                  style={{ background: '#2b2b2b', color: '#ECA72C', border: 'none', borderRadius: 8, padding: '9px 20px', fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}
-                >
-                  📋 کپی لینک رفرال
-                </button>
-                <div style={{ marginTop: 12, fontSize: 13, color: extraAnalyses > 0 ? '#27ae60' : '#aaa', fontWeight: extraAnalyses > 0 ? 600 : 400 }}>
+                <CopyBox text={referralLink} />
+                <div style={{ marginTop: 12, fontSize: 13, color: extraAnalyses > 0 ? '#27ae60' : '#e05555', fontWeight: extraAnalyses > 0 ? 600 : 400 }}>
                   {extraAnalyses > 0
-                    ? `🎉 ${extraAnalyses} نفر از لینکت ثبت‌نام کردن — ${extraAnalyses} آنالیز اضافه گرفتی`
-                    : 'هنوز کسی از لینکت ثبت‌نام نکرده'}
+                    ? `🎉 ${extraAnalyses} نفر از لینکت ثبت‌نام کردن و ${extraAnalyses} آنالیز اضافه گرفتی.`
+                    : 'هنوز کسی از لینکت ثبت‌نام نکرده.'}
                 </div>
               </>
             ) : (
@@ -309,6 +301,35 @@ const inputStyle = {
   background: '#fff', color: '#2b2b2b', outline: 'none',
   boxSizing: 'border-box',
 };
+
+function CopyBox({ text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div
+      onClick={copy}
+      title="کلیک کن تا کپی بشه"
+      style={{
+        display: 'flex', alignItems: 'center', gap: 10,
+        background: '#f8f8f8', border: '1.5px solid #e0e0e0', borderRadius: 8,
+        padding: '10px 14px', cursor: 'pointer', transition: 'border-color 0.15s',
+      }}
+      onMouseEnter={e => e.currentTarget.style.borderColor = '#ECA72C'}
+      onMouseLeave={e => e.currentTarget.style.borderColor = '#e0e0e0'}
+    >
+      <span style={{ flex: 1, fontSize: 12, direction: 'ltr', textAlign: 'left', wordBreak: 'break-all', color: '#444' }}>
+        {text}
+      </span>
+      <span style={{ fontSize: 16, flexShrink: 0, color: copied ? '#27ae60' : '#aaa' }}>
+        {copied ? '✓' : '📋'}
+      </span>
+    </div>
+  );
+}
 
 function LoginButton() {
   const [loading, setLoading] = useState(false);
