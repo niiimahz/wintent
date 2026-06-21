@@ -114,7 +114,7 @@ export function HeaderBar({ setPage, actionListCount, user }) {
                 cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif', fontWeight: 700,
               }}
             >
-              ورود با Gmail
+              ورود
             </button>
           )}
         </div>

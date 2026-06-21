@@ -36,11 +36,13 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
           {!user ? (
             <>
               <div style={{ fontSize: 44, marginBottom: 16 }}>🔍</div>
-              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10, textAlign: 'center' }}>
-                برای شروع، با Gmail وارد شو
+              <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
+                گزارشی هدفمند برای سئو هدفمندتر!
               </div>
-              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24, textAlign: 'center' }}>
-                وینتنت مستقیم به سرچ کنسولت وصل میشه و گزارش می‌سازه — بدون نیاز به اکسپورت فایل.
+              <p style={{ fontSize: 13, color: '#888', lineHeight: 2, marginBottom: 24, textAlign: 'center' }}>
+                برای شروع، با جیمیل لاگین کنید و سرچ کنسول خود را متصل کنید.
+                <br />
+                وینتنت گزارشات را برای شما آماده می‌کند...
               </p>
               <button
                 onClick={() => setPage(5)}
@@ -50,7 +52,7 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
                   border: 'none', cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif',
                 }}
               >
-                ورود با Gmail
+                ورود
               </button>
             </>
           ) : providerToken ? (
