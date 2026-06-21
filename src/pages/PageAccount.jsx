@@ -223,7 +223,7 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
           </div>
 
           {loading ? (
-            <div style={{ textAlign: 'center', color: '#aaa', padding: '24px 0', fontSize: 13 }}>در حال بارگذاری…</div>
+            <div style={{ textAlign: 'center', color: '#aaa', padding: '24px 0', fontSize: 13 }}>در حال مشاهده گزارش…</div>
           ) : analyses.length === 0 ? (
             <div style={{ textAlign: 'center', color: '#aaa', padding: '32px 0' }}>
               <div style={{ fontSize: 32, marginBottom: 10 }}>📭</div>
@@ -247,7 +247,7 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
                     </div>
                   </div>
                   <button onClick={() => loadAnalysis(a.id)} style={{ background: '#ECA72C', color: '#2b2b2b', border: 'none', borderRadius: 7, padding: '7px 14px', fontWeight: 700, fontSize: 12, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif', whiteSpace: 'nowrap' }}>
-                    بارگذاری
+                    مشاهده گزارش
                   </button>
                 </div>
               ))}
