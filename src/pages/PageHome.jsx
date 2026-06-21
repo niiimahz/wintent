@@ -55,12 +55,8 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
             </>
           ) : providerToken ? (
             <>
-              <div style={{ fontSize: 44, marginBottom: 16 }}>📊</div>
-              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 10 }}>
-                آماده‌ای؟
-              </div>
-              <p style={{ fontSize: 13, color: '#888', lineHeight: 1.8, marginBottom: 24 }}>
-                سایتت رو انتخاب کن و بازه زمانی بده تا گزارش کامل بسازیم.
+              <p style={{ fontSize: 14, color: '#666', lineHeight: 1.8, marginBottom: 28 }}>
+                سرچ کنسولت رو وصل کن، آنالیزش رو تحویل بگیر.
               </p>
               <button
                 onClick={onOpenGSC}
@@ -68,9 +64,12 @@ export default function PageHome({ user, setPage, providerToken, onConnectGSC, o
                   width: '100%', padding: '14px', borderRadius: 10,
                   background: '#ECA72C', color: '#2b2b2b', fontWeight: 700, fontSize: 15,
                   border: 'none', cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif',
+                  transition: 'background 0.15s, transform 0.1s',
                 }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#f5b535'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#ECA72C'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
-                انتخاب سایت و دریافت گزارش
+                اتصال سرچ کنسول و دریافت گزارش
               </button>
             </>
           ) : (

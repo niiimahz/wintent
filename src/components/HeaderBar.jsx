@@ -74,26 +74,6 @@ export function HeaderBar({ setPage, actionListCount, user }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           {user ? (
             <>
-              {/* تحلیل فایل جدید - only when logged in */}
-              <button
-                onClick={() => setPage(1)}
-                style={{
-                  background: 'none', color: '#fff', fontSize: 13, fontWeight: 500,
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
-                  opacity: 0.8, fontFamily: 'Vazirmatn, sans-serif', padding: 0,
-                  transition: 'opacity 0.15s',
-                }}
-                onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
-              >
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                  <circle cx="7.5" cy="7.5" r="6.5" stroke="white" strokeWidth="1.5"/>
-                  <line x1="7.5" y1="4" x2="7.5" y2="11" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                  <line x1="4" y1="7.5" x2="11" y2="7.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-                تحلیل فایل جدید
-              </button>
-
               {/* Avatar + حساب کاربری → account page */}
               <button
                 onClick={() => setPage(5)}
