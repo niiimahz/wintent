@@ -73,17 +73,7 @@ export default function App() {
     const refCode = sessionStorage.getItem('wintent_ref');
     if (refCode) {
       sessionStorage.removeItem('wintent_ref');
-      // Find profile of referrer by referral_code, then update current user's profile
-      (async () => {
-        const { data: referrer } = await supabase
-          .from('profiles')
-          .select('id')
-          .eq('referral_code', refCode)
-          .single();
-        if (referrer && referrer.id !== user.id) {
-          await supabase.from('profiles').update({ referred_by: referrer.id }).eq('id', user.id).is('referred_by', null);
-        }
-      })();
+      supabase.rpc('apply_referral', { ref_code: refCode });
     }
 
     const stored = sessionStorage.getItem('wintent_pending_raw');
