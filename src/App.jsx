@@ -164,14 +164,6 @@ export default function App() {
     }
   }, [nameModalData, user, settings]);
 
-  // ── Name modal: user skipped naming ───────────────────
-  const handleNameSkip = useCallback(() => {
-    setShowNameModal(false);
-    const data = nameModalData;
-    setNameModalData(null);
-    setRawData(data);
-    setPage(2);
-  }, [nameModalData]);
 
   // ── Load existing analysis from account page ──────────
   const handleLoadAnalysis = useCallback(({ rawData: d, settings: s, analysisId, analysisName }) => {
@@ -274,7 +266,7 @@ export default function App() {
         }} />
       )}
       {showNameModal && (
-        <NameAnalysisModal onSave={handleNameSave} onSkip={handleNameSkip} />
+        <NameAnalysisModal onSave={handleNameSave} />
       )}
 
       {page === 1 && (

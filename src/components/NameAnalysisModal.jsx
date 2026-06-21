@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function NameAnalysisModal({ onSave, onSkip }) {
+export function NameAnalysisModal({ onSave }) {
   const [name, setName] = useState('');
 
   const handleSave = () => {
@@ -55,6 +55,7 @@ export function NameAnalysisModal({ onSave, onSkip }) {
             outline: 'none',
             marginBottom: 16,
             transition: 'border-color 0.15s',
+            boxSizing: 'border-box',
           }}
           onFocus={e => { e.target.style.borderColor = '#ECA72C'; }}
           onBlur={e => { e.target.style.borderColor = '#e0e0e0'; }}
@@ -78,19 +79,6 @@ export function NameAnalysisModal({ onSave, onSkip }) {
           }}
         >
           ذخیره و مشاهده نتایج
-        </button>
-
-        <button
-          onClick={onSkip}
-          style={{
-            display: 'block', width: '100%', marginTop: 12,
-            background: 'none', border: 'none',
-            color: '#aaa', fontSize: 12, cursor: 'pointer',
-            fontFamily: 'Vazirmatn, sans-serif',
-            textAlign: 'center',
-          }}
-        >
-          بدون ذخیره ادامه بده
         </button>
       </div>
     </div>
