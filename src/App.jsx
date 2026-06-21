@@ -117,7 +117,12 @@ export default function App() {
   // ── Save analysis to Supabase ─────────────────────────
   const saveAnalysis = async (name, data, currentUser) => {
     const u = currentUser || user;
-    if (!u) return null;
+    if (!u) { alert('خطا: کاربر لاگین نیست'); return null; }
+
+    // Ensure fresh session
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { alert('خطا: session منقضی شده — دوباره لاگین کن'); return null; }
+
     const { data: saved, error } = await supabase.from('analyses').insert({
       user_id: u.id,
       name,
@@ -126,7 +131,12 @@ export default function App() {
       chart_data: data.chart,
       settings: settings,
     }).select('id').single();
-    if (error) { console.error('Save analysis error:', error); return null; }
+
+    if (error) {
+      alert('خطا در ذخیره: ' + error.message + ' | code: ' + error.code);
+      console.error('Save analysis error:', error);
+      return null;
+    }
     return saved?.id ?? null;
   };
 
