@@ -28,6 +28,7 @@ export default function App() {
   const [tableMode, setTableMode] = useState('queries');
   const [initialSort, setInitialSort] = useState(null);
   const [currentAnalysisId, setCurrentAnalysisId] = useState(null);
+  const [analysesVersion, setAnalysesVersion] = useState(0); // increments on save to trigger refetch
 
   // ── Modal state ───────────────────────────────────────
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -140,7 +141,10 @@ export default function App() {
     setRawData(data);
     setPage(2);
     const id = await saveAnalysis(name, data, currentUser);
-    if (id) setCurrentAnalysisId(id);
+    if (id) {
+      setCurrentAnalysisId(id);
+      setAnalysesVersion(v => v + 1); // trigger refetch in PageAccount
+    }
   }, [nameModalData, user, settings]);
 
   // ── Name modal: user skipped naming ───────────────────
@@ -270,6 +274,7 @@ export default function App() {
       )}
       {page === 5 && (
         <PageAccount
+          key={analysesVersion}
           setPage={setPage}
           user={user}
           actionList={actionList}

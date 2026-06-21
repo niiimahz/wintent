@@ -32,9 +32,12 @@ export function HeaderBar({ setPage, actionListCount, user }) {
 
         {/* RIGHT (first in RTL): brand + action list (only when logged in) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <span style={{ fontWeight: 700, fontSize: 20, color: '#ECA72C', letterSpacing: '-0.5px', userSelect: 'none' }}>
+          <button
+            onClick={() => setPage(1)}
+            style={{ fontWeight: 700, fontSize: 20, color: '#ECA72C', letterSpacing: '-0.5px', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
+          >
             wintent
-          </span>
+          </button>
 
           {user && (
             <button
@@ -91,12 +94,20 @@ export function HeaderBar({ setPage, actionListCount, user }) {
                 تحلیل فایل جدید
               </button>
 
-              {/* Avatar → account page */}
+              {/* Avatar + حساب کاربری → account page */}
               <button
                 onClick={() => setPage(5)}
-                title="حساب کاربری"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+                  display: 'flex', alignItems: 'center', gap: 7,
+                  opacity: 0.9, transition: 'opacity 0.15s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+                onMouseLeave={e => e.currentTarget.style.opacity = '0.9'}
               >
+                <span style={{ color: '#fff', fontSize: 13, fontWeight: 500, fontFamily: 'Vazirmatn, sans-serif' }}>
+                  حساب کاربری
+                </span>
                 {avatarUrl
                   ? <img src={avatarUrl} alt="" style={{ width: 30, height: 30, borderRadius: '50%', border: '2px solid #ECA72C', objectFit: 'cover' }} />
                   : <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#ECA72C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#2b2b2b' }}>{initials}</div>

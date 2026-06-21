@@ -11,10 +11,12 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
 
+  // Re-fetch every time this page is shown (not just on user change)
   useEffect(() => {
     if (!user) { setLoading(false); return; }
+    setLoading(true);
     Promise.all([fetchProfile(), fetchAnalyses()]).finally(() => setLoading(false));
-  }, [user]);
+  }, [user]);  // eslint-disable-line
 
   // Not logged in → show login page
   if (!loading && !user) {
@@ -108,7 +110,7 @@ export default function PageAccount({ setPage, user, actionList, onLoadAnalysis,
 
   return (
     <div className="page-scroll" style={{ minHeight: '100vh', background: '#f5f5f5' }}>
-      <HeaderBar setPage={setPage} actionListCount={actionList.size} />
+      <HeaderBar setPage={setPage} actionListCount={actionList.size} user={user} />
 
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '32px 20px', direction: 'rtl' }}>
 
