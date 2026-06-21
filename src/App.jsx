@@ -114,30 +114,34 @@ export default function App() {
   }
 
   // ── Save analysis to Supabase ─────────────────────────
-  const saveAnalysis = useCallback(async (name, data) => {
-    if (!user) return null;
+  const saveAnalysis = async (name, data, currentUser) => {
+    const u = currentUser || user;
+    if (!u) return null;
     const { data: saved, error } = await supabase.from('analyses').insert({
-      user_id: user.id,
+      user_id: u.id,
       name,
       queries_data: data.queries,
       pages_data: data.pages,
       chart_data: data.chart,
       settings: settings,
     }).select('id').single();
-    if (error) { console.error(error); return null; }
+    if (error) { console.error('Save analysis error:', error); return null; }
     return saved?.id ?? null;
-  }, [user, settings]);
+  };
 
   // ── Name modal: user confirmed name ───────────────────
   const handleNameSave = useCallback(async (name) => {
-    setShowNameModal(false);
+    // Capture data before clearing state
     const data = nameModalData;
+    const currentUser = user;
+    setShowNameModal(false);
     setNameModalData(null);
-    const id = await saveAnalysis(name, data);
-    setCurrentAnalysisId(id);
+    // Show results immediately, save in background
     setRawData(data);
     setPage(2);
-  }, [nameModalData, saveAnalysis]);
+    const id = await saveAnalysis(name, data, currentUser);
+    if (id) setCurrentAnalysisId(id);
+  }, [nameModalData, user, settings]);
 
   // ── Name modal: user skipped naming ───────────────────
   const handleNameSkip = useCallback(() => {
