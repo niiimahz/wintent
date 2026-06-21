@@ -24,11 +24,17 @@ export default function PageAdmin({ user, setPage }) {
     setLoading(false);
   }
 
-  async function saveExtra(id) {
+  function baseLimit(u) {
+    return (u.phone && u.first_name && u.job_position) ? 3 : 1;
+  }
+
+  async function saveCap(id, u) {
+    const cap = parseInt(editValue);
+    if (isNaN(cap) || cap < baseLimit(u)) return;
     setSaving(true);
     await supabase.rpc('admin_set_extra_analyses', {
       target_id: id,
-      new_value: parseInt(editValue) || 0,
+      new_value: cap - baseLimit(u),
     });
     setSaving(false);
     setEditingId(null);
@@ -108,7 +114,7 @@ export default function PageAdmin({ user, setPage }) {
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                 <thead>
                   <tr style={{ background: '#f8f8f8', borderBottom: '2px solid #f0f0f0' }}>
-                    {['ایمیل', 'نام', 'شماره', 'پوزیشن', 'نحوه آشنایی', 'تاریخ عضویت', 'آنالیز ساخته', 'رفرال', 'آنالیز اضافه', 'ویرایش'].map(h => (
+                    {['ایمیل', 'نام', 'شماره', 'پوزیشن', 'نحوه آشنایی', 'تاریخ عضویت', 'آنالیز ساخته', 'رفرال', 'سقف آنالیز'].map(h => (
                       <th key={h} style={{ padding: '12px 14px', textAlign: 'right', fontWeight: 600, color: '#555', whiteSpace: 'nowrap' }}>{h}</th>
                     ))}
                   </tr>
@@ -145,7 +151,7 @@ export default function PageAdmin({ user, setPage }) {
                               autoFocus
                             />
                             <button
-                              onClick={() => saveExtra(u.id)}
+                              onClick={() => saveCap(u.id, u)}
                               disabled={saving}
                               style={{ background: '#ECA72C', color: '#2b2b2b', border: 'none', borderRadius: 6, padding: '5px 10px', fontWeight: 700, fontSize: 12, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif' }}
                             >
@@ -157,26 +163,19 @@ export default function PageAdmin({ user, setPage }) {
                             >×</button>
                           </div>
                         ) : (
-                          <span style={{ fontWeight: 600, color: u.extra_analyses > 0 ? '#27ae60' : '#ccc' }}>
-                            {u.extra_analyses || 0}
-                          </span>
-                        )}
-                      </td>
-                      <td style={{ padding: '11px 14px', textAlign: 'center' }}>
-                        {editingId !== u.id && (
-                          <button
-                            onClick={() => { setEditingId(u.id); setEditValue(String(u.extra_analyses || 0)); }}
-                            style={{ background: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: 6, padding: '5px 10px', fontSize: 12, cursor: 'pointer', fontFamily: 'Vazirmatn, sans-serif', color: '#555' }}
+                          <span
+                            onClick={() => { setEditingId(u.id); setEditValue(String(baseLimit(u) + (u.extra_analyses || 0))); }}
+                            style={{ fontWeight: 600, color: '#2b2b2b', cursor: 'pointer', borderBottom: '1px dashed #ccc', paddingBottom: 1 }}
                           >
-                            ویرایش
-                          </button>
+                            {baseLimit(u) + (u.extra_analyses || 0)}
+                          </span>
                         )}
                       </td>
                     </tr>
                   ))}
                   {filtered.length === 0 && (
                     <tr>
-                      <td colSpan={10} style={{ padding: '32px', textAlign: 'center', color: '#aaa' }}>کاربری پیدا نشد.</td>
+                      <td colSpan={9} style={{ padding: '32px', textAlign: 'center', color: '#aaa' }}>کاربری پیدا نشد.</td>
                     </tr>
                   )}
                 </tbody>
