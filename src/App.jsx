@@ -40,6 +40,11 @@ export default function App() {
 
   // ── Auth listener ─────────────────────────────────────
   useEffect(() => {
+    // Capture referral code from URL before OAuth redirect clears it
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if (refCode) sessionStorage.setItem('wintent_ref', refCode);
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       const u = session?.user ?? null;
       setUser(u);
@@ -63,6 +68,24 @@ export default function App() {
   // After Google OAuth redirect back, pendingRawData may be in sessionStorage
   useEffect(() => {
     if (!user) return;
+
+    // Apply referral code if this is a new signup
+    const refCode = sessionStorage.getItem('wintent_ref');
+    if (refCode) {
+      sessionStorage.removeItem('wintent_ref');
+      // Find profile of referrer by referral_code, then update current user's profile
+      (async () => {
+        const { data: referrer } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('referral_code', refCode)
+          .single();
+        if (referrer && referrer.id !== user.id) {
+          await supabase.from('profiles').update({ referred_by: referrer.id }).eq('id', user.id).is('referred_by', null);
+        }
+      })();
+    }
+
     const stored = sessionStorage.getItem('wintent_pending_raw');
     if (stored) {
       try {
@@ -83,24 +106,20 @@ export default function App() {
       // Also keep in memory in case user doesn't redirect yet
       setPendingRawData(parsedData);
     } else {
-      // Check analysis limit
+      // Check analysis limit using total_analyses_created (permanent counter)
       const profile = await fetchProfile(user.id);
-      const hasPhone = profile?.phone_verified && profile?.phone;
-      const maxAllowed = hasPhone ? 3 : 1;
+      const isComplete = profile?.phone_verified && profile?.phone && profile?.first_name && profile?.job_position && profile?.how_found;
+      const baseLimit = isComplete ? 3 : 1;
+      const maxAllowed = baseLimit + (profile?.extra_analyses ?? 0);
+      const totalCreated = profile?.total_analyses_created ?? 0;
 
-      const { count } = await supabase
-        .from('analyses')
-        .select('id', { count: 'exact', head: true })
-        .eq('user_id', user.id);
-
-      if (count >= maxAllowed) {
-        if (!hasPhone) {
-          alert('برای آنالیز بیشتر، ابتدا شماره موبایل خود را در بخش حساب کاربری ثبت کنید.');
-          setPage(5);
+      if (totalCreated >= maxAllowed) {
+        if (!isComplete) {
+          alert('برای آنالیز بیشتر، ابتدا پروفایلت رو تو حساب کاربری تکمیل کن تا سقف به ۳ برسه.');
         } else {
-          alert('به حداکثر ۳ آنالیز رسیدی. یکی را حذف کن.');
-          setPage(5);
+          alert(`به سقف ${maxAllowed} آنالیز رسیدی. از طریق رفرال میتونی سقف رو بالاتر ببری.`);
         }
+        setPage(5);
         return;
       }
 
@@ -117,11 +136,10 @@ export default function App() {
   // ── Save analysis to Supabase ─────────────────────────
   const saveAnalysis = async (name, data, currentUser) => {
     const u = currentUser || user;
-    if (!u) { alert('خطا: کاربر لاگین نیست'); return null; }
+    if (!u) return null;
 
-    // Ensure fresh session
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) { alert('خطا: session منقضی شده — دوباره لاگین کن'); return null; }
+    if (!session) return null;
 
     const { data: saved, error } = await supabase.from('analyses').insert({
       user_id: u.id,
@@ -133,7 +151,6 @@ export default function App() {
     }).select('id').single();
 
     if (error) {
-      alert('خطا در ذخیره: ' + error.message + ' | code: ' + error.code);
       console.error('Save analysis error:', error);
       return null;
     }
